@@ -23,7 +23,7 @@ public class WordLoader {
                 }
             }
         } catch (FileNotFoundException e) {
-            Message.showMessage("fileNotFound");
+            System.out.println(Message.FILE_IS_EMPTY.getText());
         }
     }
 

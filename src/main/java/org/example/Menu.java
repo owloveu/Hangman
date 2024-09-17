@@ -10,7 +10,7 @@ public class Menu {
 
     static void startMenu() {
         Scanner scanner = new Scanner(System.in);
-        Message.showMessage("startMenu");
+        System.out.println(Message.START_MENU.getText());
         String input = scanner.nextLine();
             switch (input) {
                 case NEW_GAME:
@@ -19,18 +19,20 @@ public class Menu {
                 case EXIT_GAME:
                     exit();
                 default:
-                    Message.showMessage("wrongInput");
+                    System.out.println(Message.INVALID_INPUT.getText());
                     startMenu();
             }
         scanner.close();
     }
 
     private static void exit() {
-        Message.showMessage("exitMessage");
+        System.out.println(Message.EXIT.getText());
         System.exit(0);
     }
-    //TODO указать на игровой цикл
+
     private static void newGame(){
-        Message.showMessage("newGame");
+        System.out.println(Message.START_NEW_GAME.getText());
+        HangmanGame game = new HangmanGame();
+        game.startGame();
     }
 }

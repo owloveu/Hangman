@@ -14,9 +14,9 @@ public class WordHandler {
         this.wordToGuess = getRandomWord();
     }
 
-    private String getRandomWord() {
+    public String getRandomWord() {
         if (listOfWords.isEmpty()) {
-            Message.showMessage("emptyList");
+            System.out.println(Message.FILE_IS_EMPTY.getText());
         }
         Random random = new Random();
         return listOfWords.get(random.nextInt(listOfWords.size()));
@@ -25,16 +25,18 @@ public class WordHandler {
     private String maskWordToGuess() {
         return "*".repeat(wordToGuess.length());
     }
-
+/*
     public String getMaskedWord() {
         return maskWordToGuess();
     }
+ */
 
     public void printMaskedWord() {
         System.out.println(maskWordToGuess());
     }
-
+/*
     public void printWordToGuess() {
         System.out.println(wordToGuess.toUpperCase());
     }
+ */
 }

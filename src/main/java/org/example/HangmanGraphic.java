@@ -39,9 +39,10 @@ class HangmanGraphic {
     };
 
     public void displayHangmanStage(int errorCount) {
-        if (errorCount < 1 || errorCount > HANGMAN_STAGES.length) {
-            Message.showMessage("errorCount");
+        if (errorCount < 0 || errorCount >= HANGMAN_STAGES.length) {
+            System.out.println(Message.LOSE_MESSAGE.getText());
+        } else {
+            System.out.println(HANGMAN_STAGES[errorCount]);
         }
-        System.out.println(HANGMAN_STAGES[errorCount - 1]);
     }
 }
