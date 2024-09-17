@@ -1,28 +1,27 @@
 package org.example;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
+//TODO дополнить список сообщений по необходимости
+public enum Message {
 
-public class Message {
+    FILE_IS_EMPTY("Файл пустой, проверьте путь к файлу"),
+    START_MENU("\n 1.Новая игра \n 2. Выход\n"),
+    EXIT("Всего хорошего!"),
+    GREETING("Добро пожаловать в игру!"),
+    ENTER_LETTER("Пожалуйста, введите букву: "),
+    INVALID_INPUT ("Некорректный ввод. Попробуйте снова."),
+    GAME_OVER ("Игра окончена!"),
+    WIN_MESSAGE ("Поздравляем! Вы выиграли!"),
+    LOSE_MESSAGE ("Вы проиграли. Слово было: "),
+    START_NEW_GAME ("Начинаем новую игру!"),
+    REQUEST_LETTER ("Введите букву: "),
+    GUESSED_LETTERS("\nЭти буквы уже были: "),
+    WORD_TO_GUESS("Загаданное слово: ");
 
-    private static final Properties messages = new Properties();
-
-    static {
-        try (InputStream input = Message.class.getClassLoader().getResourceAsStream("messages.properties")) {
-            if (input == null) {
-                throw new RuntimeException("Properties file not found");
-            }
-            messages.load(new InputStreamReader(input, StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            throw new RuntimeException("Error loading properties file", e);
-        }
+    private final String text;
+    Message(String text) {
+        this.text = text;
     }
-
-    public static void showMessage(String key) {
-        String message = messages.getProperty(key);
-        System.out.println(message != null ? message : "Message not found " + key);
+    public String getText() {
+        return text;
     }
 }
