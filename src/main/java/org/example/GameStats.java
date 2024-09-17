@@ -3,15 +3,14 @@ package org.example;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 //TODO начать и кончить
 public class GameStats {
     private final Set<Character> guessedLetters = new HashSet<>();
     private final int maxErrors = 7;  // Максимальное количество ошибок
     private int errorCount = 0;
-    private String wordToGuess;
-    private StringBuilder currentGuess;
+    private final String wordToGuess;
+    private final StringBuilder currentGuess;
 
     public GameStats(String wordToGuess) {
         this.wordToGuess = wordToGuess.toLowerCase();  // Загаданное слово
