@@ -3,30 +3,36 @@ package org.example;
 import java.util.List;
 import java.util.Random;
 
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class WordHandler {
 
-    private final List<String> listOfWords;
-    private final String wordToGuess;
+    private static final List<String> listOfWords = new ArrayList<>();
+    private final Path wordsPath = Paths.get("src", "resources", "words.txt");
 
     public WordHandler() {
-        WordLoader fp = new WordLoader();
-        this.listOfWords = fp.getListOfWords();
-        this.wordToGuess = getRandomWord();
+        loadWordsToList();
+    }
+
+    private void loadWordsToList() {
+        try (Scanner scanner = new Scanner(wordsPath.toFile())) {
+            while (scanner.hasNextLine()) {
+                String word = scanner.nextLine().trim();
+                if (!word.isEmpty()) {
+                    listOfWords.add(word);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(Message.FILE_IS_EMPTY.getText());
+        }
     }
 
     public String getRandomWord() {
-        if (listOfWords.isEmpty()) {
-            System.out.println(Message.FILE_IS_EMPTY.getText());
-        }
         Random random = new Random();
         return listOfWords.get(random.nextInt(listOfWords.size()));
-    }
-
-    private String maskWordToGuess() {
-        return "*".repeat(wordToGuess.length());
-    }
-
-    public void printMaskedWord() {
-        System.out.println(maskWordToGuess());
     }
 }
