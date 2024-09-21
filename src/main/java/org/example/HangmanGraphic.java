@@ -27,6 +27,12 @@ class HangmanGraphic {
       \\
       ☻
     / ▲ \\
+   
+    """,
+    """
+      \\
+      ☻
+    / ▲ \\
      |
     """,
 
@@ -39,6 +45,7 @@ class HangmanGraphic {
     };
 
     public void displayHangmanStage(int errorCount) {
-        System.out.println(HANGMAN_STAGES[Math.min(errorCount, HANGMAN_STAGES.length - 1)]);
+        int index = Math.min(errorCount, HANGMAN_STAGES.length - 1);
+        System.out.println(HANGMAN_STAGES[index]);
     }
 }

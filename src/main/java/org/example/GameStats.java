@@ -1,41 +1,34 @@
 package org.example;
 
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 
-public class GameStats {
+class GameStats {
 
     private final Set<Character> guessedLetters = new HashSet<>();
     private int errorCount = 0;
     private final String wordToGuess;
     private final StringBuilder currentGuess;
 
-    public GameStats(String wordToGuess) {
-        this.wordToGuess = wordToGuess.toLowerCase();
+    public GameStats() {
+        WordHandler wordHandler = new WordHandler();
+        this.wordToGuess = wordHandler.getRandomWord();
         this.currentGuess = new StringBuilder("*".repeat(wordToGuess.length()));
-        new HangmanGraphic().displayHangmanStage(errorCount);
     }
 
-//TODO упростить метод?
     public void makeGuess(char guessedLetter) {
         guessedLetter = Character.toLowerCase(guessedLetter);
-        if (isAlreadyGuessed(guessedLetter)) {
+        if (!guessedLetters.add(guessedLetter)) {
             showGuessedLetters();
             return;
         }
-        guessedLetters.add(guessedLetter);
+
         if (isCorrectGuess(guessedLetter)) {
             updateCurrentGuess(guessedLetter);
         } else {
-            handleIncorrectGuess();
+            errorCount++;
         }
-    }
-
-
-    private boolean isAlreadyGuessed(char guessedLetter) {
-        return guessedLetters.contains(guessedLetter);
     }
 
     private void showGuessedLetters() {
@@ -43,7 +36,7 @@ public class GameStats {
         System.out.println(guessedLetters);
     }
 
-    public boolean isCorrectGuess(char guessedLetter) {
+    private boolean isCorrectGuess(char guessedLetter) {
         return wordToGuess.indexOf(guessedLetter) != -1;
     }
 
@@ -53,36 +46,6 @@ public class GameStats {
                 currentGuess.setCharAt(i, guessedLetter);
             }
         }
-    }
-
-
-    private void handleIncorrectGuess() {
-        errorCount++;
-    }
-
-    public static char userLetter() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println(Message.REQUEST_LETTER.getText());
-            String userLetter = getUserInput(scanner).toLowerCase();
-            if (isValidLetter(userLetter)) {
-                return userLetter.charAt(0);
-            } else {
-                System.out.println(Message.INVALID_INPUT.getText());
-            }
-        }
-    }
-
-    public int getErrorCount() {
-        return errorCount;
-    }
-
-    private static String getUserInput(Scanner scanner) {
-        return scanner.nextLine().trim();
-    }
-
-    private static boolean isValidLetter(String userLetter) {
-        return userLetter.length() == 1 && userLetter.matches("[а-я]");
     }
 
     public boolean isWordGuessed() {
@@ -98,7 +61,10 @@ public class GameStats {
     }
 
     public boolean isGameOver() {
-        int maxErrors = 7;
-        return errorCount >= maxErrors || isWordGuessed();
+        return errorCount >= 7 || isWordGuessed();
+    }
+
+    public int getErrorCount() {
+        return errorCount;
     }
 }

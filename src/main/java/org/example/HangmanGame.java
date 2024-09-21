@@ -3,32 +3,37 @@ package org.example;
 public class HangmanGame {
 
     private final GameStats gameStats;
-    private final WordHandler wordHandler;
     private final HangmanGraphic hangmanGraphic;
+    private final UserInput inputHandler;
 
     public HangmanGame() {
-        this.wordHandler = new WordHandler();
-        String wordToGuess = wordHandler.getRandomWord();
-        this.gameStats = new GameStats(wordToGuess);
+        this.gameStats = new GameStats();
         this.hangmanGraphic = new HangmanGraphic();
+        this.inputHandler = new UserInput();
     }
 
     public void startGame() {
         System.out.println(Message.WORD_TO_GUESS.getText());
-        wordHandler.printMaskedWord();
+        displayCurrentState();
         while (!gameStats.isGameOver()) {
-            char guessedLetter = GameStats.userLetter();
+            char guessedLetter = inputHandler.getUserLetter();
             gameStats.makeGuess(guessedLetter);
             hangmanGraphic.displayHangmanStage(gameStats.getErrorCount());
-            System.out.println(gameStats.getCurrentGuess());
+            displayCurrentState();
         }
-        if (gameStats.isWordGuessed()) {
-            System.out.println(Message.WIN_MESSAGE.getText());
-            Menu.startMenu();
-        } else {
-            System.out.println(Message.LOSE_MESSAGE.getText());
+        displayGameResult();
+        Menu.startMenu();
+    }
+
+    private void displayCurrentState() {
+        System.out.println(gameStats.getCurrentGuess());
+    }
+
+    private void displayGameResult() {
+        String message = gameStats.isWordGuessed() ? Message.WIN_MESSAGE.getText() : Message.LOSE_MESSAGE.getText();
+        System.out.println(message);
+        if (!gameStats.isWordGuessed()) {
             System.out.println(gameStats.getWordToGuess());
-            Menu.startMenu();
         }
     }
 }
