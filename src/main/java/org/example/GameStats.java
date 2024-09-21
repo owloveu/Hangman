@@ -4,30 +4,28 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-//TODO начать и кончить
+
 public class GameStats {
+
     private final Set<Character> guessedLetters = new HashSet<>();
-    private final int maxErrors = 7;  // Максимальное количество ошибок
     private int errorCount = 0;
     private final String wordToGuess;
     private final StringBuilder currentGuess;
 
     public GameStats(String wordToGuess) {
-        this.wordToGuess = wordToGuess.toLowerCase();  // Загаданное слово
+        this.wordToGuess = wordToGuess.toLowerCase();
         this.currentGuess = new StringBuilder("*".repeat(wordToGuess.length()));
         new HangmanGraphic().displayHangmanStage(errorCount);
     }
 
+//TODO упростить метод?
     public void makeGuess(char guessedLetter) {
         guessedLetter = Character.toLowerCase(guessedLetter);
-
         if (isAlreadyGuessed(guessedLetter)) {
             showGuessedLetters();
             return;
         }
-
         guessedLetters.add(guessedLetter);
-
         if (isCorrectGuess(guessedLetter)) {
             updateCurrentGuess(guessedLetter);
         } else {
@@ -35,23 +33,20 @@ public class GameStats {
         }
     }
 
-    // Метод для проверки, была ли буква уже угадана
+
     private boolean isAlreadyGuessed(char guessedLetter) {
         return guessedLetters.contains(guessedLetter);
     }
 
-    // Метод для вывода списка уже угаданных букв
     private void showGuessedLetters() {
         System.out.println(Message.GUESSED_LETTERS.getText());
         System.out.println(guessedLetters);
     }
 
-    // Метод для проверки, есть ли угаданная буква в слове
     public boolean isCorrectGuess(char guessedLetter) {
         return wordToGuess.indexOf(guessedLetter) != -1;
     }
 
-    // Метод для обновления текущего состояния слова при правильной букве
     private void updateCurrentGuess(char guessedLetter) {
         for (int i = 0; i < wordToGuess.length(); i++) {
             if (wordToGuess.charAt(i) == guessedLetter) {
@@ -60,7 +55,7 @@ public class GameStats {
         }
     }
 
-    // Метод для обработки неправильной буквы
+
     private void handleIncorrectGuess() {
         errorCount++;
     }
@@ -93,6 +88,7 @@ public class GameStats {
     public boolean isWordGuessed() {
         return currentGuess.toString().equals(wordToGuess);
     }
+
     public String getWordToGuess() {
         return wordToGuess;
     }
@@ -102,6 +98,7 @@ public class GameStats {
     }
 
     public boolean isGameOver() {
+        int maxErrors = 7;
         return errorCount >= maxErrors || isWordGuessed();
     }
 }

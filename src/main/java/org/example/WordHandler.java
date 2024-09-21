@@ -25,18 +25,8 @@ public class WordHandler {
     private String maskWordToGuess() {
         return "*".repeat(wordToGuess.length());
     }
-/*
-    public String getMaskedWord() {
-        return maskWordToGuess();
-    }
- */
 
     public void printMaskedWord() {
         System.out.println(maskWordToGuess());
     }
-/*
-    public void printWordToGuess() {
-        System.out.println(wordToGuess.toUpperCase());
-    }
- */
 }
