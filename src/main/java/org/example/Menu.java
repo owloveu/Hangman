@@ -2,43 +2,37 @@ package org.example;
 
 import java.util.Scanner;
 
-/*
-Класс Menu реализует следующий функционал:
-    startMenu запрашивает пользовательский ввод:
-        1) Начать новую игру;
-        2) Посмотреть правила игры, возвращает пользователя обратно в меню;
-        3) Выход из игры;
-        При некорректном вводе символа выдаёт сообщение об ошибке, возвращает пользователя обратно в меню;
-    exit
-        Прощается с пользователем;
-        Закрывает приложение;
- */
 
 public class Menu {
 
-    protected static void startMenu() {
+    private final static String NEW_GAME = "1";
+    private final static String EXIT_GAME = "2";
+
+    static void startMenu() {
         Scanner scanner = new Scanner(System.in);
-        Messages.menuMessage();
+        System.out.println(Message.START_MENU.getText());
         String input = scanner.nextLine();
             switch (input) {
-                case "1":
-                    Hangman.game();
+                case NEW_GAME:
+                    newGame();
                     break;
-                case "2":
-                    FileProcessor.readFileRules();
-                    startMenu();
-                    break;
-                case "3":
+                case EXIT_GAME:
                     exit();
                 default:
-                    Messages.wrongInputMessage();
+                    System.out.println(Message.INVALID_INPUT.getText());
                     startMenu();
             }
         scanner.close();
     }
 
     private static void exit() {
-        Messages.exitMessage();
+        System.out.println(Message.EXIT.getText());
         System.exit(0);
+    }
+
+    private static void newGame(){
+        System.out.println(Message.START_NEW_GAME.getText());
+        HangmanGame game = new HangmanGame();
+        game.startGame();
     }
 }
