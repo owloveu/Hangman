@@ -12,17 +12,15 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         System.out.println(Message.START_MENU.getText());
         String input = scanner.nextLine();
-            switch (input) {
-                case NEW_GAME:
-                    newGame();
-                    break;
-                case EXIT_GAME:
-                    exit();
-                default:
-                    System.out.println(Message.INVALID_INPUT.getText());
-                    startMenu();
+
+        switch (input) {
+            case NEW_GAME -> newGame();
+            case EXIT_GAME -> exit();
+            default -> {
+                System.out.println(Message.INVALID_INPUT.getText());
+                startMenu();
             }
-        scanner.close();
+        }
     }
 
     private static void exit() {

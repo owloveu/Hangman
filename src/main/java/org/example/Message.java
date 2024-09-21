@@ -1,10 +1,9 @@
 package org.example;
 
-//TODO дополнить список сообщений по необходимости
 public enum Message {
 
     FILE_IS_EMPTY("Файл пустой, проверьте путь к файлу"),
-    START_MENU("\n 1.Новая игра \n 2. Выход\n"),
+    START_MENU("\n1. Новая игра \n2. Выход\n"),
     EXIT("\nВсё, пиздуй-бороздуй, и я попиздил, нахуй."),
     GREETING("\nЙо-йо-йо 1-4-8-3 да 3-6-9, Альбукерке жжёт, чё-кого, суч*ра, жди сигнала\u2060\u2060"),
     ENTER_LETTER("\nПожалуйста, введите букву: "),
@@ -17,9 +16,11 @@ public enum Message {
     WORD_TO_GUESS("Загаданное слово: ");
 
     private final String text;
+
     Message(String text) {
         this.text = text;
     }
+
     public String getText() {
         return text;
     }
