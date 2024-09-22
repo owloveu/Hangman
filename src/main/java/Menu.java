@@ -1,5 +1,3 @@
-package org.example;
-
 public class Menu {
 
     private final UserInput userInput = new UserInput();

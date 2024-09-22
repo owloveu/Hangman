@@ -1,5 +1,3 @@
-package org.example;
-
 public enum Message {
 
     FILE_IS_EMPTY("Файл пустой, проверьте путь к файлу"),

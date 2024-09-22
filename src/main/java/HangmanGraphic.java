@@ -1,5 +1,3 @@
-package org.example;
-
 class HangmanGraphic {
     private static final String[] HANGMAN_STAGES = {
     "\n",
