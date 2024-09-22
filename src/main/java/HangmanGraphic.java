@@ -1,6 +1,4 @@
-package org.example;
-
-class HangmanGraphic {
+public class HangmanGraphic {
     private static final String[] HANGMAN_STAGES = {
     "\n",
 

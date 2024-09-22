@@ -1,8 +1,5 @@
-package org.example;
-
 import java.util.List;
 import java.util.Random;
-
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,7 +8,7 @@ import java.util.Scanner;
 
 public class WordHandler {
 
-    private static final List<String> listOfWords = new ArrayList<>();
+    private final List<String> listOfWords = new ArrayList<>();
     private final Path wordsPath = Paths.get("src", "resources", "words.txt");
 
     public WordHandler() {
@@ -21,7 +18,7 @@ public class WordHandler {
     private void loadWordsToList() {
         try (Scanner scanner = new Scanner(wordsPath.toFile())) {
             while (scanner.hasNextLine()) {
-                String word = scanner.nextLine().trim();
+                String word = scanner.nextLine().trim().toLowerCase();
                 if (!word.isEmpty()) {
                     listOfWords.add(word);
                 }
