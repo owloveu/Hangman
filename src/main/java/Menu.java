@@ -4,33 +4,33 @@ public class Menu {
     private final static String NEW_GAME = "1";
     private final static String EXIT_GAME = "2";
 
-    static void startMenu() {
-        Menu menu = new Menu();
-        menu.displayMenu();
-    }
+    public void startMenu() {
+        boolean running = true;
+        while (running) {
+            System.out.println(Message.START_MENU.getText());
+            String input = userInput.getUserInput();
 
-    private void displayMenu() {
-        System.out.println(Message.START_MENU.getText());
-        String input = userInput.getUserInput();
-
-        switch (input) {
-            case NEW_GAME -> newGame();
-            case EXIT_GAME -> exit();
-            default -> {
-                System.out.println(Message.INVALID_INPUT.getText());
-                displayMenu();
+            switch (input) {
+                case NEW_GAME -> newGame();
+                case EXIT_GAME -> {
+                    exit();
+                    running = false;
+                }
+                default -> System.out.println(Message.INVALID_INPUT.getText());
             }
         }
     }
 
-    private static void exit() {
+    private void exit() {
         System.out.println(Message.EXIT.getText());
-        System.exit(0);
     }
 
-    private static void newGame(){
+    private void newGame(){
         System.out.println(Message.START_NEW_GAME.getText());
-        HangmanGame game = new HangmanGame();
+        WordHandler wordHandler = new WordHandler();
+        GameStats gameStats = new GameStats(wordHandler);
+        HangmanGraphic hangmanGraphic = new HangmanGraphic();
+        HangmanGame game = new HangmanGame(gameStats, hangmanGraphic, userInput);
         game.startGame();
     }
 }

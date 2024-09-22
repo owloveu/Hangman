@@ -1,41 +1,31 @@
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-
-class GameStats {
-
+public class GameStats {
     private final Set<Character> guessedLetters = new HashSet<>();
     private int errorCount = 0;
     private final String wordToGuess;
     private final StringBuilder currentGuess;
+    private static final int MAX_ERRORS = 7;
 
-    public GameStats() {
-        WordHandler wordHandler = new WordHandler();
+    public GameStats(WordHandler wordHandler) {
         this.wordToGuess = wordHandler.getRandomWord();
         this.currentGuess = new StringBuilder("*".repeat(wordToGuess.length()));
     }
 
-    public void makeGuess(char guessedLetter) {
+    public boolean makeGuess(char guessedLetter) {
         guessedLetter = Character.toLowerCase(guessedLetter);
-        if (!guessedLetters.add(guessedLetter)) {
-            showGuessedLetters();
-            return;
+        boolean isNewGuess = guessedLetters.add(guessedLetter);
+        if (!isNewGuess) {
+            return false;
         }
-
-        if (isCorrectGuess(guessedLetter)) {
+        if (wordToGuess.indexOf(guessedLetter) >= 0) {
             updateCurrentGuess(guessedLetter);
         } else {
             errorCount++;
         }
-    }
-
-    private void showGuessedLetters() {
-        System.out.println(Message.GUESSED_LETTERS.getText());
-        System.out.println(guessedLetters);
-    }
-
-    private boolean isCorrectGuess(char guessedLetter) {
-        return wordToGuess.indexOf(guessedLetter) != -1;
+        return true;
     }
 
     private void updateCurrentGuess(char guessedLetter) {
@@ -44,6 +34,10 @@ class GameStats {
                 currentGuess.setCharAt(i, guessedLetter);
             }
         }
+    }
+
+    public Set<Character> getGuessedLetters() {
+        return Collections.unmodifiableSet(guessedLetters);
     }
 
     public boolean isWordGuessed() {
@@ -59,7 +53,7 @@ class GameStats {
     }
 
     public boolean isGameOver() {
-        return errorCount >= 7 || isWordGuessed();
+        return errorCount >= MAX_ERRORS || isWordGuessed();
     }
 
     public int getErrorCount() {

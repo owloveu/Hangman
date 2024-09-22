@@ -2,25 +2,28 @@ public class HangmanGame {
 
     private final GameStats gameStats;
     private final HangmanGraphic hangmanGraphic;
-    private final UserInput inputHandler;
+    private final UserInput userInput;
 
-    public HangmanGame() {
-        this.gameStats = new GameStats();
-        this.hangmanGraphic = new HangmanGraphic();
-        this.inputHandler = new UserInput();
+    public HangmanGame(GameStats gameStats, HangmanGraphic hangmanGraphic, UserInput userInput) {
+        this.gameStats = gameStats;
+        this.hangmanGraphic = hangmanGraphic;
+        this.userInput = userInput;
     }
 
     public void startGame() {
         System.out.println(Message.WORD_TO_GUESS.getText());
         displayCurrentState();
         while (!gameStats.isGameOver()) {
-            char guessedLetter = inputHandler.getUserLetter();
-            gameStats.makeGuess(guessedLetter);
+            char guessedLetter = userInput.getUserLetter();
+            boolean isNewGuess = gameStats.makeGuess(guessedLetter);
+            if (!isNewGuess) {
+                System.out.println(Message.GUESSED_LETTERS.getText() + gameStats.getGuessedLetters());
+                continue;
+            }
             hangmanGraphic.displayHangmanStage(gameStats.getErrorCount());
             displayCurrentState();
         }
         displayGameResult();
-        Menu.startMenu();
     }
 
     private void displayCurrentState() {
